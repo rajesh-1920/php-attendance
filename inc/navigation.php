@@ -1,6 +1,5 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-dark sticky-top" data-bs-theme="dark">
     <div class="container-fluid">
-        <a class="navbar-brand" href="#">Attendance Management System</a>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">

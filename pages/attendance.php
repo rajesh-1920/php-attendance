@@ -8,9 +8,8 @@ $class_date = $_GET['class_date'] ?? "";
 $studentList = $actionClass->attendanceStudents($class_id, $class_date);
 
 ?>
-<!-- <pre>
-    <?php print_r($studentList) ?>
-</pre> -->
+<?php print_r($studentList) ?>
+
 <form action="" id="manage-attendance">
     <div class="row justify-content-center">
         <div class="col-lg-12 col-md-12 col-sm-12 col-12">
