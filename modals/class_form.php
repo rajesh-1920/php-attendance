@@ -1,28 +1,28 @@
 <?php
 session_start();
-require_once(realpath(__DIR__.'/../classes/actions.class.php'));
+require_once(realpath(__DIR__ . '/../classes/actions.class.php'));
 $actionClass = new Actions();
-if(isset($_POST['id'])){
+if (isset($_POST['id'])) {
   $class = $actionClass->get_class($_POST['id']);
   extract($class);
 }
 ?>
 <div class="container-fluid">
-    <form id="class-form" method="POST">
-      <input type="hidden" name="id" value="<?= $id ?? "" ?>">
-        <div class="row">
-            <div class="col-12">
-                <div class="mb-3">
-                    <label for="name" class="form-label">Class Name & Subject</label>
-                    <input type="text" class="form-control" id="name" name="name" value="<?= $name ?? "" ?>" required="required">
-                </div>
-            </div>
+  <form id="class-form" method="POST">
+    <input type="hidden" name="id" value="<?= $id ?? "" ?>">
+    <div class="row">
+      <div class="col-12">
+        <div class="mb-3">
+          <label for="name" class="form-label">Class Name & Subject</label>
+          <input type="text" class="form-control" id="name" name="name" value="<?= $name ?? "" ?>" required="required">
         </div>
-    </form>
+      </div>
+    </div>
+  </form>
 </div>
 
 <script>
-  $('#class-form').submit(function(e){
+  $('#class-form').submit(function(e) {
     e.preventDefault()
     var _this = $(this)
     start_loader();
@@ -39,19 +39,19 @@ if(isset($_POST['id'])){
       url: "ajax-api.php?action=save_class",
       method: "POST",
       data: $(this).serialize(),
-      dataType:'JSON',
-      error: (err)=>{
+      dataType: 'JSON',
+      error: (err) => {
         flashData.find('.flashdata-msg').text(`An error occured!`)
         flashData.addClass('flashdata-danger')
         _this.prepend(flashData)
         end_loader();
         console.warn(err)
       },
-      success: function(resp){
-        if(resp?.status == 'success'){
+      success: function(resp) {
+        if (resp?.status == 'success') {
           location.reload()
-        }else{
-          if(resp?.msg != ''){
+        } else {
+          if (resp?.msg != '') {
             flashData.find('.flashdata-msg').text(`${resp?.msg}`)
             flashData.addClass('flashdata-danger')
             _this.prepend(flashData)
