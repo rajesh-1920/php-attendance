@@ -1,6 +1,6 @@
 <div class="page-title mb-3">List of Students</div>
 <hr>
-<?php 
+<?php
 $studentList = $actionClass->list_student();
 ?>
 <div class="row justify-content-center">
@@ -30,20 +30,20 @@ $studentList = $actionClass->list_student();
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php if(!empty($studentList) && is_array($studentList)): ?>
-                                <?php foreach($studentList as $row): ?>
-                                    <tr>
-                                        <td class="text-center px-2 py-1"><?= $row['id'] ?></td>
-                                        <td class="px-2 py-1"><?= $row['class'] ?></td>
-                                        <td class="px-2 py-1"><?= $row['name'] ?></td>
-                                        <td class="text-center px-2 py-1">
-                                            <div class="input-group input-group-sm justify-content-center">
-                                                <button class="btn btn-sm btn-outline-primary rounded-0 edit_student" type="button" data-id="<?= $row['id'] ?>" title="Edit"><i class="fas fa-edit"></i></button>
-                                                <button class="btn btn-sm btn-outline-danger rounded-0 delete_student" type="button" data-id="<?= $row['id'] ?>" title="Delete"><i class="fas fa-trash"></i></button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                <?php endforeach; ?>
+                                <?php if (!empty($studentList) && is_array($studentList)): ?>
+                                    <?php foreach ($studentList as $row): ?>
+                                        <tr>
+                                            <td class="text-center px-2 py-1"><?= $row['id'] ?></td>
+                                            <td class="px-2 py-1"><?= $row['class'] ?></td>
+                                            <td class="px-2 py-1"><?= $row['name'] ?></td>
+                                            <td class="text-center px-2 py-1">
+                                                <div class="input-group input-group-sm justify-content-center">
+                                                    <button class="btn btn-sm btn-outline-primary rounded-0 edit_student" type="button" data-id="<?= $row['id'] ?>" title="Edit"><i class="fas fa-edit"></i></button>
+                                                    <button class="btn btn-sm btn-outline-danger rounded-0 delete_student" type="button" data-id="<?= $row['id'] ?>" title="Delete"><i class="fas fa-trash"></i></button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    <?php endforeach; ?>
                                 <?php else: ?>
                                     <tr>
                                         <th class="text-center px-2 py-1" colspan="4">No data found.</th>
@@ -59,38 +59,42 @@ $studentList = $actionClass->list_student();
 </div>
 
 <script>
-    $(document).ready(function(){
-        $('#add_student').click(function(e){
+    $(document).ready(function() {
+        $('#add_student').click(function(e) {
             e.preventDefault()
             open_modal('student_form.php', `<?= isset($id) ? "Add New Student" : "Update Student" ?>`)
         })
-        $('.edit_student').click(function(e){
+        $('.edit_student').click(function(e) {
             e.preventDefault()
             var id = $(this)[0].dataset?.id || ''
-            open_modal('student_form.php', `<?= isset($id) ? "Create New Student" : "Update Student" ?>`, {id: id})
+            open_modal('student_form.php', `<?= isset($id) ? "Create New Student" : "Update Student" ?>`, {
+                id: id
+            })
         })
-        $('.delete_student').click(function(e){
+        $('.delete_student').click(function(e) {
             e.preventDefault()
             var id = $(this)[0].dataset?.id || ''
             start_loader()
-            if(confirm(`Are you sure to delete the selected student? This action cannot be undone.`) == true){
+            if (confirm(`Are you sure to delete the selected student? This action cannot be undone.`) == true) {
                 $.ajax({
                     url: "./ajax-api.php?action=delete_student",
                     method: "POST",
-                    data: { id : id},
+                    data: {
+                        id: id
+                    },
                     dataType: 'JSON',
                     error: (error) => {
                         console.error(error)
                         alert('An error occurred.')
                     },
-                    success:function(resp){
-                        if(resp?.status != '')
+                    success: function(resp) {
+                        if (resp?.status != '')
                             location.reload();
                         else
                             end_loader();
                     }
                 })
-            }else{
+            } else {
                 end_loader();
             }
         })

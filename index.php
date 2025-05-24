@@ -12,13 +12,13 @@ $page_title = ucwords(str_replace("_", " ", $page));
 <body>
     <?php include_once('inc/navigation.php'); ?>
 
-    <div class="container-md py-3">
+    <div class="content-wrapper">
         <?php if (isset($_SESSION['flashdata']) && !empty($_SESSION['flashdata'])): ?>
-            <div class="flashdata flashdata-<?= $_SESSION['flashdata']['type'] ?? 'default' ?> mb-3">
-                <div class="d-flex w-100 align-items-center flex-wrap">
-                    <div class="col-11"><?= $_SESSION['flashdata']['msg'] ?? '' ?></div>
-                    <div class="col-1 text-center">
-                        <a href="javascript:void(0)" onclick="this.closest('.flashdata').remove()" class="flashdata-close"><i class="far fa-times-circle"></i></a>
+            <div class="flashdata flashdata-<?= $_SESSION['flashdata']['type'] ?? 'default' ?>">
+                <div class="flashdata-message">
+                    <div><?= $_SESSION['flashdata']['msg'] ?? '' ?></div>
+                    <div>
+                        <a href="javascript:void(0)" onclick="this.closest('.flashdata').remove()" class="flashdata-close">[x]</a>
                     </div>
                 </div>
             </div>
