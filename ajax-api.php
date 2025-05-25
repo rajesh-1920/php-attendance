@@ -1,10 +1,10 @@
-<?php
+<?php 
 session_start();
 require_once('classes/actions.class.php');
 $actionClass = new Actions();
 $action = $_GET['action'] ?? "";
 $response = [];
-switch ($action) {
+switch($action){
     case 'save_class':
         $response = $actionClass->save_class();
         break;
@@ -26,3 +26,4 @@ switch ($action) {
 }
 
 echo json_encode($response);
+?>

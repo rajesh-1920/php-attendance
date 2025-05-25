@@ -1,6 +1,6 @@
 <div class="page-title mb-3">List of Classes</div>
 <hr>
-<?php
+<?php 
 $classList = $actionClass->list_class();
 ?>
 <div class="row justify-content-center">
@@ -28,19 +28,19 @@ $classList = $actionClass->list_class();
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php if (!empty($classList) && is_array($classList)): ?>
-                                    <?php foreach ($classList as $row): ?>
-                                        <tr>
-                                            <td class="text-center px-2 py-1"><?= $row['id'] ?></td>
-                                            <td class="px-2 py-1"><?= $row['name'] ?></td>
-                                            <td class="text-center px-2 py-1">
-                                                <div class="input-group input-group-sm justify-content-center">
-                                                    <button class="btn btn-sm btn-outline-primary rounded-0 edit_class" type="button" data-id="<?= $row['id'] ?>" title="Edit"><i class="fas fa-edit"></i></button>
-                                                    <button class="btn btn-sm btn-outline-danger rounded-0 delete_class" type="button" data-id="<?= $row['id'] ?>" title="Delete"><i class="fas fa-trash"></i></button>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    <?php endforeach; ?>
+                                <?php if(!empty($classList) && is_array($classList)): ?>
+                                <?php foreach($classList as $row): ?>
+                                    <tr>
+                                        <td class="text-center px-2 py-1"><?= $row['id'] ?></td>
+                                        <td class="px-2 py-1"><?= $row['name'] ?></td>
+                                        <td class="text-center px-2 py-1">
+                                            <div class="input-group input-group-sm justify-content-center">
+                                                <button class="btn btn-sm btn-outline-primary rounded-0 edit_class" type="button" data-id="<?= $row['id'] ?>" title="Edit"><i class="fas fa-edit"></i></button>
+                                                <button class="btn btn-sm btn-outline-danger rounded-0 delete_class" type="button" data-id="<?= $row['id'] ?>" title="Delete"><i class="fas fa-trash"></i></button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                <?php endforeach; ?>
                                 <?php else: ?>
                                     <tr>
                                         <th class="text-center px-2 py-1" colspan="3">No data found.</th>
@@ -56,42 +56,38 @@ $classList = $actionClass->list_class();
 </div>
 
 <script>
-    $(document).ready(function() {
-        $('#add_class').click(function(e) {
+    $(document).ready(function(){
+        $('#add_class').click(function(e){
             e.preventDefault()
             open_modal('class_form.php', `<?= isset($id) ? "Create New Class" : "Update Class" ?>`)
         })
-        $('.edit_class').click(function(e) {
+        $('.edit_class').click(function(e){
             e.preventDefault()
             var id = $(this)[0].dataset?.id || ''
-            open_modal('class_form.php', `<?= isset($id) ? "Create New Class" : "Update Class" ?>`, {
-                id: id
-            })
+            open_modal('class_form.php', `<?= isset($id) ? "Create New Class" : "Update Class" ?>`, {id: id})
         })
-        $('.delete_class').click(function(e) {
+        $('.delete_class').click(function(e){
             e.preventDefault()
             var id = $(this)[0].dataset?.id || ''
             start_loader()
-            if (confirm(`Are you sure to delete the selected class? This action cannot be undone.`) == true) {
+            if(confirm(`Are you sure to delete the selected class? This action cannot be undone.`) == true){
                 $.ajax({
                     url: "./ajax-api.php?action=delete_class",
                     method: "POST",
-                    data: {
-                        id: id
-                    },
+                    data: { id : id},
                     dataType: 'JSON',
                     error: (error) => {
                         console.error(error)
                         alert('An error occurred.')
                     },
-                    success: function(resp) {
-                        if (resp?.status != '')
+                    success:function(resp){
+                        if(resp?.status != '')
                             location.reload();
                         else
                             end_loader();
                     }
                 })
-            } else {
+            }else{
                 end_loader();
             }
         })
