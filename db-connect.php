@@ -1,11 +1,7 @@
 <?php 
-// Hostname
 $host = "localhost";
-// Username
 $uname = "root";
-// Password
 $pw = "";
-// Database Name
 $dbname = "simple_attendance_db";
 
 try{
